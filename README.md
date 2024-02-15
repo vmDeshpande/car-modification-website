@@ -18,12 +18,3 @@ This project is an admin panel for managing car modification orders. It includes
 ## Usage
 1. Log in with admin credentials.
 2. View and manage car modification orders.
-
-## Contributing
-Contributions are welcome. Please open an issue or submit a pull request.
-
-## License
-This project is licensed under the [MIT License](LICENSE).
-
-## Contact
-For any inquiries, contact admin@example.com.
