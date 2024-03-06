@@ -1,95 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <title>Car Modification Website</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        .hidden {
+            display: none;
+            visibility: hidden;
+        }
 
+        .card {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .group {
+            margin-bottom: 20px;
+        }
+
+        .group input,
+        .group textarea,
+        .group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .group label {
+            position: absolute;
+            left: 10px;
+            top: 15px;
+            transition: 0.3s;
+        }
+
+        .group input:focus,
+        .group textarea:focus,
+        .group select:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
+        }
+
+        .group input:focus+label,
+        .group textarea:focus+label,
+        .group select:focus+label {
+            top: 5px;
+            font-size: 12px;
+            color: #007bff;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
+
 <body class="body">
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Carvilla</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="index.html">Home</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Form</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="admin.html">Admin panel</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Carvilla</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-    <!-- <div class="container">
-        <h1>Car Modification Form</h1>
-        <form id="modificationForm">
-            <div class="form-group">
-                <input placeholder="Customer Name" class="form-control" type="text" id="customerName" name="customerName" required>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Form</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin.html">Admin panel</a>
+                    </li>
+                </ul>
             </div>
-            <div class="form-group">
-            <input placeholder="Phone Number" class="form-control" type="tel" id="customerPhoneNumber" name="customerPhoneNumber" required>
         </div>
-        <div class="form-group">
-            <input placeholder="Email" class="form-control" type="email" id="customerEmail" name="customerEmail" >
-        </div>
-            <div class="form-group">
-            <input placeholder="Car Model" class="form-control" type="text" id="carModel" name="carModel" required>
-        </div>
-            <div class="form-group">
-            <input placeholder="Car Number" class="form-control" type="text" id="carNumber" name="carNumber" required>
-        </div>
-            <div class="form-group">
-            <textarea placeholder="Modifications" class="form-control" id="modifications" name="modifications" rows="4" required></textarea>
-        </div>
-            <button class="btn btn-primary btn-lg btn-block" type="submit">Submit</button>
-        </form>
-    </div> -->
+    </nav>
 
-    <div class="container">
-      <div class="card">
-        <span class="title">Leave a Comment</span>
-        <form class="form" id="modificationForm">
-          <div class="group">
-            <input placeholder="‎" type="text" id="customerName" name="customerName" required>
-            <label for="name">Name</label>
-          </div>
-          <div class="group">
-            <input placeholder="‎" type="text" id="customerPhoneNumber" name="customerPhoneNumber" required>
-            <label for="name">Phone Number</label>
-          </div>
-          <div class="group">
-            <input placeholder="‎" type="email" id="customerEmail" name="customerEmail">
-            <label for="email">Email</label>
-          </div>
-          <div class="group">
-            <input placeholder="‎" type="text" id="carModel" name="carModel" required required>
-            <label for="name">Car Model</label>
-          </div>
-          <div class="group">
-            <input placeholder="‎" type="text" id="carNumber" name="carNumber" required>
-            <label for="name">Car Number</label>
-          </div>
-          <div class="group">
-            <textarea placeholder="‎" id="modifications" name="modifications" rows="4" required></textarea>
-            <label for="comment">Modifications</label>
-          </div>
-          <button type="submit">Submit</button>
-        </form>
-      </div>
+    <div class="container mt-5">
+        <div class="card">
+            <span class="title">Leave a Comment</span>
+            <form class="form" id="modificationForm">
+                <div class="group">
+                    <input placeholder="‎" type="text" id="customerName" name="customerName" required>
+                    <label for="name">Name</label>
+                </div>
+                <div class="group">
+                    <input placeholder="‎" type="text" id="customerPhoneNumber" name="customerPhoneNumber"
+                        pattern="[7-9]{1}[0-9]{9}" title="Phone number with 7-9 and remaining 9 digits with 0-9" required>
+                    <label for="name">Phone Number</label>
+                </div>
+                <div class="group">
+                    <input placeholder="‎" type="email" id="customerEmail" name="customerEmail"
+                        pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$">
+                    <label for="email">Email</label>
+                </div>
+                <div class="group">
+                    <label for="carModelOptions">Car Model:</label><br>
+                    <div class="position-relative">
+                        <select class="form-select" id="carModelOptions" name="userType">
+                            <option value="Mahindra">Mahindra</option>
+                            <option value="Tata">Tata</option>
+                            <option value="Skoda">Skoda</option>
+                            <option value="Toyota">Toyota</option>
+                            <option value="Kia">Kia</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="carmodeldiv" class="group hidden">
+                    <input placeholder="‎" type="text" id="carModel" name="carModel">
+                    <label for="name">Car Model</label>
+                </div>
+                <div class="group">
+                    <input placeholder="‎" type="text" id="carNumber" name="carNumber" required>
+                    <label for="name">Car Number</label>
+                </div>
+                <div class="group">
+                    <label for="carModelOptions">Suggestions:</label><br>
+                    <div class="position-relative">
+                        <select class="form-select" name="userType" id="suggestions">
+                            <option value="Alloy Wheel And Tyres">Alloy Wheel And Tyres</option>
+                            <option value="Car Exhauset And Tuning">Car Exhauset And Tuning</option>
+                            <option value="Performance And Carbon Parts">Performance And Carbon Parts</option>
+                            <option value="Body Style And Upgrade Kit">Body Style And Upgrade Kit</option>
+                            <option value="Interiors And Infotainment System">Interiors And Infotainment System</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="group">
+                    <textarea placeholder="‎" id="modifications" name="modifications" rows="4" required>Oiling, Cleaning</textarea>
+                    <label for="comment">Modifications</label>
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
     </div>
-    
+
+    <script>
+        document.getElementById('carModelOptions').addEventListener('change', function () {
+            const carModel = this.value;
+            const carModelText = document.getElementById('carmodeldiv');
+
+            if (carModel === 'Other') {
+                carModelText.classList.remove('hidden');
+            } else {
+                carModelText.classList.add('hidden');
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/script.js"></script>
-    
+
 </body>
+
 </html>

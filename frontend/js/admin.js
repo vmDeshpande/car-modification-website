@@ -19,11 +19,20 @@ async function attemptLogin() {
             hideLoginForm();
             fetchAndDisplayModifications();
         } else {
-            alert('Authentication failed. Please check your credentials.');
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: `Authentication failed. Please check your credentials.`,
+              })
         }
     } catch (error) {
         console.error('Error during login:', error);
-        alert('An error occurred during login. Please try again.');
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: `An error occurred during login. Please try again. ${error}`,
+            confirmButtonText: 'OK',
+          })
     }
 }
 
@@ -48,21 +57,27 @@ async function fetchAndDisplayModifications() {
         console.error('Error fetching modifications:', error);
     }
 }
-
 function createModificationDiv(modification) {
-    const modificationDiv = document.createElement('tr');
-    modificationDiv.innerHTML = `
-        <td>${modification.customerName}</td>
-        <td>${modification.customerPhoneNumber}</td>
-        <td>${modification.customerEmail}</td>
-        <td>${modification.carModel}</td>
-        <td>${modification.carNumber}</td>
-        <td>${modification.modifications}</td>
+    const cardContainer = document.createElement('div');
+    cardContainer.className = 'card mb-3';
+
+    const cardBody = document.createElement('div');
+    cardBody.className = 'card-body';
+
+    cardBody.innerHTML = `
+        <h5 class="card-title">Customer Name: <strong>${modification.customerName}</strong></h5>
+        <p class="card-text"><i class="fas fa-phone-alt"></i> Customer Number: <strong>${modification.customerPhoneNumber}</strong></p>
+        <p class="card-text"><i class="fas fa-envelope"></i> Customer Email: <strong>${modification.customerEmail}</strong></p>
+        <p class="card-text"><i class="fas fa-car"></i> Customer Car Model: <strong>${modification.carModel}</strong></p>
+        <p class="card-text"><i class="fas fa-car-side"></i> Customer Car Number: <strong>${modification.carNumber}</strong></p>
+        <p class="card-text"><i class="fas fa-lightbulb"></i> Suggestions Customer liked: <strong>${modification.suggestions}</strong></p>
+        <p class="card-text"><i class="fas fa-tools"></i> Modification: <strong>${modification.modifications}</strong></p>
     `;
-    return modificationDiv;
+
+    cardContainer.appendChild(cardBody);
+
+    return cardContainer;
 }
-
-
 
 function hideLoginForm() {
     document.getElementById('loginForm').style.display = 'none';

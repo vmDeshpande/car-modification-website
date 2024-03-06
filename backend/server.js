@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const User = require('./models/user');
 const config = require('./config');
+const axios = require('axios')
 
 const app = express();
 const port = 3000;
@@ -28,6 +29,7 @@ const carModificationSchema = new mongoose.Schema({
     customerEmail: { type: String, required: false },
     carModel: { type: String, required: true },
     carNumber: { type: String, required: true },
+    suggestions:{ type: String, required: false},
     modifications: { type: String, required: true },
 });
 
@@ -37,16 +39,28 @@ app.use(bodyParser.json());
 
 app.post('/api/submit-modification', async (req, res) => {
     try {
+
+        const existingModification = await CarModification.findOne({ carNumber: req.body.carNumber });
+
+        if (existingModification) {
+            return res.status(400).json({ message: 'Car with the provided number already exists.' });
+        }
         const newModification = new CarModification({
             customerName: req.body.customerName,
             customerPhoneNumber: req.body.customerPhoneNumber,
             customerEmail: req.body.customerEmail,
-            carModel: req.body.carModel,
+            carModel: req.body.carModeltext,
             carNumber: req.body.carNumber,
+            suggestions: req.body.suggestions,
             modifications: req.body.modifications,
         });
 
         await newModification.save();
+
+        const phoneNumber = req.body.customerPhoneNumber;
+        const suggestions = req.body.suggestions;
+        const modifications = req.body.modifications;
+        await sendSMS(phoneNumber, suggestions, modifications);
 
         res.status(201).json({ message: 'Car modification submitted successfully.' });
     } catch (error) {
@@ -82,6 +96,44 @@ app.post('/api/check-authentication', async (req, res) => {
   }
 });
 
+const sendSMS = async (phoneNumber, modifications, suggestions) => {
+    try {
+         const totalAmount = Math.ceil(Math.random() * 9000) + 1000;
+
+         const currentDate = new Date();
+         const dateAfter3Days = new Date(currentDate);
+         dateAfter3Days.setDate(dateAfter3Days.getDate() + 3);
+ 
+         const suggestionsArray = Array.isArray(suggestions) ? suggestions : [suggestions];
+         const modificationsArray = Array.isArray(modifications) ? modifications : [modifications];
+
+         const message = `Thank you for submitting the car modification details. Your services will be processed.\n
+Services added: ${suggestionsArray.join(', ')}, ${modificationsArray.join(', ')}\n
+Total Amount: ${totalAmount} INR\n
+Date after 3 days: ${dateAfter3Days.toDateString()}`;
+         console.log(message)
+        const response = await axios.post(
+            'https://www.fast2sms.com/dev/bulkV2',
+            {
+                route: 'q',
+                message: message,
+                language: 'english',
+                flash: 0,
+                numbers: phoneNumber,
+            },
+            {
+                headers: {
+                    authorization: '1TYD4PWytQQiPTEikImlKgrl8vigGcyxpOmpRGgStpXoQ0hN9P4mYXYiHaIu',
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
+
+        console.log('SMS sent successfully:', response);
+    } catch (error) {
+        console.error('Error sending SMS:', error);
+    }
+};
 
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
